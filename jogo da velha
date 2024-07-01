@@ -1,0 +1,152 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <ctime>
+
+using namespace std;
+
+vector <string> pos {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+
+string posicao;
+string maq;
+int barra;
+
+string um = "1";
+string dois = "2";
+string tres = "3";
+string quatro = "4";
+string cinco = "5";
+string seis = "6";
+string sete = "7";
+string oito = "8";
+string nove = "9";
+
+void verify() {
+    if (posicao == um) um = "O";
+    if (posicao == dois) dois = "O";
+    if (posicao == tres) tres = "O";
+    if (posicao == quatro) quatro = "O";
+    if (posicao == cinco) cinco = "O";
+    if (posicao == seis) seis = "O";
+    if (posicao == sete) sete = "O";
+    if (posicao == oito) oito = "O";
+    if (posicao == nove) nove = "O";
+}
+
+void verify2() {
+    if (maq == um) um = "X";
+    if (maq == dois) dois = "X";
+    if (maq == tres) tres = "X";
+    if (maq == quatro) quatro = "X";
+    if (maq == cinco) cinco = "X";
+    if (maq == seis) seis = "X";
+    if (maq == sete) sete = "X";
+    if (maq == oito) oito = "X";
+    if (maq == nove) nove = "X";
+}
+
+bool verify3() {
+    for (const auto& i : pos) {
+            if (i == posicao) {
+                return false;
+        }
+    }
+    return true;
+}
+
+void imprime_jogo() {
+    cout << "       |       |       " << endl;
+    cout << "   " << um << "   |   " << dois << "   |   " << tres << endl;
+    cout << "       |       |       " << endl;
+    cout << "-----------------------" << endl;
+    cout << "       |       |       " << endl;
+    cout << "   " << quatro << "   |   " << cinco << "   |   " << seis << endl;
+    cout << "       |       |       " << endl;
+    cout << "-----------------------" << endl;
+    cout << "       |       |       " << endl;
+    cout << "   " << sete << "   |   " << oito << "   |   " << nove << endl;
+    cout << "       |       |       " << endl;
+}
+
+bool fim() {
+    if (um == dois && dois == tres) return false;
+    if (quatro == cinco && cinco == seis) return false;
+    if (sete == oito && oito == nove) return false;
+    if (um == quatro && quatro == sete) return false;
+    if (dois == cinco && cinco == oito) return false;
+    if (tres == seis && seis == nove) return false;
+    if (um == cinco && cinco == nove) return false;
+    if (tres == cinco && cinco == sete) return false;
+    return true;
+}
+
+void ia() {
+    vector<string> possiveis_movimentos;
+
+    if (um == dois && tres == "3") possiveis_movimentos.push_back("3");
+    else if (um == tres && dois == "2") possiveis_movimentos.push_back("2");
+    else if (dois == tres && um == "1") possiveis_movimentos.push_back("1");
+    else if (quatro == cinco && seis == "6") possiveis_movimentos.push_back("6");
+    else if (quatro == seis && cinco == "5") possiveis_movimentos.push_back("5");
+    else if (cinco == seis && quatro == "4") possiveis_movimentos.push_back("4");
+    else if (sete == oito && nove == "9") possiveis_movimentos.push_back("9");
+    else if (sete == nove && oito == "8") possiveis_movimentos.push_back("8");
+    else if (oito == nove && sete == "7") possiveis_movimentos.push_back("7");
+    else if (um == quatro && sete == "7") possiveis_movimentos.push_back("7");
+    else if (um == sete && quatro == "4") possiveis_movimentos.push_back("4");
+    else if (quatro == sete && um == "1") possiveis_movimentos.push_back("1");
+    else if (dois == cinco && oito == "8") possiveis_movimentos.push_back("8");
+    else if (dois == oito && cinco == "5") possiveis_movimentos.push_back("5");
+    else if (cinco == oito && dois == "2") possiveis_movimentos.push_back("2");
+    else if (tres == seis && nove == "9") possiveis_movimentos.push_back("9");
+    else if (tres == nove && seis == "6") possiveis_movimentos.push_back("6");
+    else if (seis == nove && tres == "3") possiveis_movimentos.push_back("3");
+    else if (um == cinco && nove == "9") possiveis_movimentos.push_back("9");
+    else if (um == nove && cinco == "5") possiveis_movimentos.push_back("5");
+    else if (cinco == nove && um == "1") possiveis_movimentos.push_back("1");
+    else if (tres == cinco && sete == "7") possiveis_movimentos.push_back("7");
+    else if (tres == sete && cinco == "5") possiveis_movimentos.push_back("5");
+    else if (cinco == sete && tres == "3") possiveis_movimentos.push_back("3");
+
+    if (!possiveis_movimentos.empty()) {
+        barra = rand() % 100;
+        if (barra <= 90) {
+            maq = possiveis_movimentos[rand() % possiveis_movimentos.size()];
+        } else {
+            maq = pos[rand() % pos.size()];
+        }
+    } else {
+        maq = pos[rand() % pos.size()];
+    }
+
+    pos.erase(remove(pos.begin(), pos.end(), maq), pos.end());
+}
+
+
+int main() {
+    srand(time(0)); // Inicialize a semente do gerador de números aleatórios uma vez
+    while (fim()) {
+        system("clear");
+        imprime_jogo();
+
+        cout << "Onde voce quer jogar?" << endl;
+        while (true) {
+            cin >> posicao;
+            if (!verify3()) break;
+            cout << "Favor escolher um numero ainda nao escolhido" << endl;
+        }
+        verify();
+
+        pos.erase(remove(pos.begin(), pos.end(), posicao), pos.end());
+
+        if (!fim()) break;
+
+        ia();
+        verify2();
+    }
+    system("clear");
+    imprime_jogo();
+    if (fim()) {
+        cout << "Fim de jogo!" << endl;
+    }
+}
