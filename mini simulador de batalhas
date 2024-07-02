@@ -1,0 +1,299 @@
+#include <iostream>
+#include <ctime>
+
+using namespace std;
+
+int decisao;
+int acerto;
+string msgv;
+int pocesc;
+int pocvd;
+int golpe;
+
+int suavd = 20;
+int seuesc = 7;
+int danoA1G1 = 5;
+int escA1G1 = 4; 
+int danoA1G2 = 3;
+int escA1G2 = 6;
+int vidag = 15;
+int escudog = 2;
+int suavd1;
+int seuesc1;
+
+
+void limpa() {
+    system("cls");
+}
+
+void esperarEnter() {
+    cout << "Pressione Enter duas vezes para continuar...";
+    cin.ignore();
+    cin.get();
+    limpa();
+}
+
+void luta1() {
+    
+    while (true) {
+        cout << "oque voce faz? \n\n1 - corte rapido \ndano ao inimigo: " << danoA1G1 << " \ndano ao escudo: " << escA1G1 << " \n\n2 - estocado leve \ndano ao inimigo: " << danoA1G2 << " \ndano ao escudo: " << escA1G2 << endl;
+        
+        if (pocvd > 0 || pocesc > 0) {
+            cout << "\n3 - tomar pocao de vida: " << pocvd << " disponivel, +3 de vida" << endl;
+            cout << "4 - tomar pocao de escudo: " << pocesc << " disponivel, +1 de escudo" << endl;
+        }
+        
+        cout << " \n\nvida do goblin: " << vidag << "\nescudo do globin: " << escudog << "\n\nsua vida: " << suavd << "\nseu escudo: "<< seuesc << endl; 
+        cin >> decisao;
+        limpa();
+
+        if (decisao == 1) {
+            acerto = rand() % 10;
+            if (acerto >= escudog) {
+                escudog = (escudog - escA1G1);
+                if (escudog < 0) escudog = 0;
+
+                vidag = vidag - danoA1G1 + escudog;
+                if (vidag < 0) vidag = 0;
+
+                cout << "voce acertou o golpe, a vida dele agora e " << vidag << " PV, e e seu escudo " << escudog << endl;
+                esperarEnter();
+                if (vidag <= 0) {
+                    break;
+                }
+
+                acerto = rand() % 10;
+                if (acerto >= 7) {
+                    seuesc1 = seuesc - 1;
+                    if (seuesc1 < 0) seuesc1 = 0;
+
+                    suavd1 = suavd - 3 + seuesc;
+                    if (suavd1 <= 0) suavd1 = 0;
+                    if (suavd1 > suavd) suavd1 = suavd - 1;
+                    suavd = suavd1;
+                    cout << "o goblin retribuiu o golpe, sua vida agora e de: " << suavd1 << " e seu escudo: " << seuesc1 << endl;
+                    esperarEnter();
+                    
+                    if (suavd <= 0) {
+                        break;
+                    }
+                } else {
+                    cout << "o goblim errou o golpe" << endl;
+                    esperarEnter();
+                }
+            } else {
+                cout << "voce errou o golpe!" << endl;
+                esperarEnter();
+
+                acerto = rand() % 10;
+                if (acerto >= 7) {
+                    int seuesc1 = seuesc - 1;
+                    if (seuesc1 < 0) seuesc1 = 0;
+                    seuesc = seuesc1;
+
+                    int suavd1 = suavd - 3 + seuesc;
+                    if (suavd1 < 0) suavd1 = 0;
+                    if (suavd1 > suavd) suavd1 = suavd - 1;
+                    suavd = suavd1;
+                    cout << "o goblin acertou o golpe, sua vida agora e de: " << suavd1 << " e seu escudo: " << seuesc1 << endl;
+                    esperarEnter();
+                } else {
+                    cout << "o goblim errou o golpe" << endl;
+                    esperarEnter();
+                }
+            }
+        } else if (decisao == 2) {
+            acerto = rand() % 10;
+            if (acerto >= escudog) {
+                escudog = (escudog - escA1G2);
+                if (escudog < 0) escudog = 0;
+
+                vidag = vidag - danoA1G2 + escudog;
+                if (vidag < 0) vidag = 0;
+
+                cout << "voce acertou o golpe, a vida dele agora e " << vidag << " PV, e e seu escudo " << escudog << endl;
+                esperarEnter();
+
+                if (vidag <= 0) {
+                    break;
+                }
+
+                acerto = rand() % 10;
+                if (acerto >= 7) {
+                    seuesc1 = seuesc - 1;
+                    if (seuesc1 < 0) seuesc1 = 0;
+                    seuesc = seuesc1;
+
+                    suavd1 = suavd - 3 + seuesc;
+                    if (suavd1 < 0) suavd1 = 0;
+                    if (suavd1 > suavd) suavd1 = suavd - 1;
+                    suavd = suavd1;
+                    cout << "o goblin retribuiu o golpe, sua vida agora e de: " << suavd1 << " e seu escudo: " << seuesc1 << endl;
+                    esperarEnter();
+
+                    if (suavd <= 0) {
+                        break;
+                    }
+                } else {
+                    cout << "o goblim errou o golpe" << endl;
+                    esperarEnter();
+                }
+            } else {
+                cout << "voce errou o golpe!" << endl;
+                esperarEnter();
+
+                acerto = rand() % 10;
+                if (acerto >= 7) {
+                    int seuesc1 = seuesc - 1;
+                    if (seuesc1 < 0) seuesc1 = 0;
+
+                    int suavd1 = suavd - 3 + seuesc;
+                    if (suavd1 < 0) suavd1 = 0;
+                    if (suavd1 > suavd) suavd1 = suavd - 1;
+                    suavd = suavd1;
+                    cout << "o goblin acertou o golpe, sua vida agora e de: " << suavd1 << " e seu escudo: " << seuesc1 << endl;
+                    esperarEnter();
+                } else {
+                    cout << "o goblim errou o golpe" << endl;
+                    esperarEnter();
+                }
+            }
+        } else if (decisao == 3) {
+            cout << "voce tomou 1 pocao de vida" << endl;
+            esperarEnter();
+            suavd += 1;
+            cout << "sua vida agora e de: " << suavd << endl;
+            pocvd -= 1;
+        } else if (decisao == 4) {
+            cout << "voce tomou 1 pocao de escudo" << endl;
+            esperarEnter();
+            seuesc += 3;
+            cout << "seu escudo agora e de: " << seuesc << endl;
+            pocesc -= 1;
+        } else {
+            cout << "favor, escolher entre as opcoes:" << endl;
+            esperarEnter();
+        }
+    }
+}
+
+void espada1() {
+    cout << "material: ferro \nsituacao: relativamente boa \n\ngolpes: \ncorte rapido: Um golpe simples, mas rapido, adequado para ataques rapidos e sucessivos, dano ao inimigo: " << danoA1G1 << ", dano ao escudo: " << escA1G1 << ". \nestocado leve: Um ataque direcionado, ideal para perfurar a defesa leve do inimigo, dano ao inimigo: " << danoA1G2 << ", dano ao escudo: " << escA1G2 << endl;
+}
+
+int main() {
+    srand(time(0));
+
+    limpa();
+    cout << "           bem vindo ao simulador de batalhas!" << endl;
+    cout << "aqui voce tera inimigos para enfrentar e vitorias para conqustar!\n" << endl;
+    esperarEnter();
+
+    cout << "seu nome e Aric Thorne, tem 1,80m de altura, voce cresceu em uma vila pacifica, aprendendo com seu pai as artes da guerra e da justica. Apos se destacar no exercito de Eldoria durante uma guerra contra as forcas sombrias de Lorde Zharok, voce retorna a sua vila para encontra-la destruida por bandidos. Determinado a restaurar a paz, voce lidera uma resistencia contra os invasores, buscando justica e seguranca para seu povo." << endl;
+    esperarEnter();
+
+    cout << "andando pela vila procurando algo que te ajudasse a descobrir oque aconteceu voce encontra uma espada afiada, voce pega ela e olha" << endl;
+    esperarEnter();
+
+    cout << "voce deseja examina-la detalhadamente?" << endl;
+    cout << "1 - sim \n2 - nao";
+    cin >> decisao;
+    if (decisao == 1) {
+        espada1();
+        esperarEnter();
+    }
+
+    limpa();
+    cout << "com sua nova espada voce comeca a caminhar novamente e logo se depara com seu primeiro inimigo: " << endl;
+    esperarEnter();
+
+    cout << "um goblim de 1,40 metros de altura, voce luta com ele ou sege sua jornada?" << endl;
+    cout << "1 - lutar \n2 - ignorar" << endl;
+    cin >> decisao;
+    limpa();
+
+    msgv = suavd > 0 && decisao ==1? "apos vencer o goblin voce continuou sua viagem" : "sem chamar a atencao do goblin voce continua sua viagem e se segue seu rumo";
+
+    if (decisao == 1) {
+        cout << "voce logo se aproxima do globin fazendo-o perceber sua presenca" << endl;
+        esperarEnter();
+        cout << "voce tenta acertar um golpe mas erra" << endl;
+        esperarEnter();
+
+        luta1();
+
+        if (suavd > 0) {
+            cout << "parabens, voce derroutou o goblin! " << endl;
+            esperarEnter();
+        } else {
+            cout << " voce morreu! " << endl;
+            exit(0);
+        }
+    } 
+
+    cout << msgv << endl;
+
+    cout << "apos andar mais ulgumas casas voce encontra uma casa de ferreiro abandonada e destruida pelos ladroes" << endl;
+    esperarEnter();
+    cout << "procurando algo que te ajudasse na sua jornada dentro da casa voce acaba encontrando uma pocao de regeneracao de armadura" << endl;
+    esperarEnter();
+    cout << "1 - tomar agora \n2 - guardar para depois \n\nsomara +1 pontos de escudo" << endl;
+    cin >> decisao;
+    
+    if (decisao == 1) {
+        seuesc += 1;
+        cout << "seu escudo agora e de: " << seuesc << endl;
+    } else {
+        pocesc++;
+        cout << "numeros de pocoes de restauracao de escudo: " << pocesc << endl;
+    }
+
+    cout << "explorando mais a casa do ferrero voce tamebm encontra uma pocao de restauracao de vida" << endl;
+    esperarEnter();
+    cout << "1 - tomar agora \nguardar para depois \n\nsomara +3 pontos de vida" << endl;
+    cin >> decisao;
+
+    if (decisao == 1) {
+        suavd += 3;
+        cout << "sua vida agora e de: " << seuesc << endl;
+    } else {
+        pocvd++;
+        cout << "numeros de pocoes de restauracao de vida: " << pocvd << endl;
+    }
+
+    cout << "depois de pegar tudo que voce achou na casa do ferreiro voce saiu e se deparou com o lider dos ladroes" << endl;
+    esperarEnter();
+    cout << "um goblin gigante de 3m de altura" << endl;
+    esperarEnter();
+    cout << "voce quer lutar com ele? ou fujir? \n\n1 - lutar \n2 - fugir" << endl;
+    cin >> decisao;
+
+    msgv = decisao == 1? "apos derrotar o lider dos ladores todo eles vao em bora e sua vila retorna a paz de antes" : "voce fica com medo ao ver o temanho do bicho na sua frente e foge para bem longe da vila, deixando-a para tras e para ser dominada pelos ladores por toda a eternidade!";
+
+    if (decisao == 1) {
+        cout << " o goblin tenta acetar um ataque direto em voce com sua espada" << endl;
+        esperarEnter();
+        cout << "porem voce desvia e sai ileso" << endl;
+        esperarEnter();
+        cout << " e agora?" << endl;
+
+        vidag = 25;
+        escudog = 8;
+        luta1();
+
+        if (suavd > 0) {
+            cout << "parabens, voce derroutou o goblin! " << endl;
+            esperarEnter();
+        } else {
+            cout << " voce morreu! " << endl;
+            exit(0);
+        }
+    }
+
+    cout << msgv << endl;
+}
+
+
+
+
+
