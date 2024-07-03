@@ -1,0 +1,145 @@
+#include <iostream>
+#include <vector>
+#include <ctime>
+#include <algorithm>
+
+using namespace std;
+
+int tamanho, mm, sn1, sn2, cada, total, contador, caractere, escolha;
+
+vector <char> sc;
+vector <char> senha;
+
+vector<char> alfabeto_maiusculo = {
+    'A', 'B', 'C', 'D', 'E', 'F', 'G',
+    'H', 'I', 'J', 'K', 'L', 'M', 'N',
+    'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+    'V', 'W', 'X', 'Y', 'Z'
+};
+
+vector<char> alfabeto_minusculo = {
+    'a', 'b', 'c', 'd', 'e', 'f', 'g',
+    'h', 'i', 'j', 'k', 'l', 'm', 'n',
+    'o', 'p', 'q', 'r', 's', 't', 'u',
+    'v', 'w', 'x', 'y', 'z'
+};
+
+vector<char> numeros = {
+    '1', '2', '3', '4', '5', '6', '7', '8', '9'
+};
+
+vector<char> especiais = {
+    '!', '@', '#', '$', '%', '^', '&', '*',
+    '(', ')', '-', '_', '+', '=', '[', ']',
+    '{', '}', ';', ':', ',', '.', '<', '>',
+    '/', '?'
+};
+
+void faz_senha() {
+    cada = tamanho / total;
+    int restante = tamanho % total;
+
+    if (mm == 1) {
+        for (int i = 0; i < cada; ++i) {
+            escolha = rand() % alfabeto_maiusculo.size();
+            sc.push_back(alfabeto_maiusculo[escolha]);
+
+            escolha = rand() % alfabeto_minusculo.size();
+            sc.push_back(alfabeto_minusculo[escolha]);
+        }
+    } else if (mm == 2) {
+        for (int i = 0; i < cada; ++i) {
+            escolha = rand() % alfabeto_maiusculo.size();
+            sc.push_back(alfabeto_maiusculo[escolha]);
+        }
+    } else if (mm == 3) {
+        for (int i = 0; i < cada; ++i) {
+            escolha = rand() % alfabeto_minusculo.size();
+            sc.push_back(alfabeto_minusculo[escolha]);
+        }
+    }
+
+    if (sn1 == 1) {
+        for (int i = 0; i < cada; ++i) {
+            escolha = rand() % numeros.size();
+            sc.push_back(numeros[escolha]);
+        }
+    }
+
+    if (sn2 == 1) {
+        for (int i = 0; i < cada; ++i) {
+            escolha = rand() % especiais.size();
+            sc.push_back(especiais[escolha]);
+        }
+    }
+
+    for (int i = 0; i < restante; ++i) {
+        if (mm == 1) {
+            escolha = rand() % (alfabeto_maiusculo.size() + alfabeto_minusculo.size());
+            if (escolha < alfabeto_maiusculo.size()) {
+                sc.push_back(alfabeto_maiusculo[escolha]);
+            } else {
+                sc.push_back(alfabeto_minusculo[escolha - alfabeto_maiusculo.size()]);
+            }
+        } else if (mm == 2) {
+            escolha = rand() % alfabeto_maiusculo.size();
+            sc.push_back(alfabeto_maiusculo[escolha]);
+        } else if (mm == 3) {
+            escolha = rand() % alfabeto_minusculo.size();
+            sc.push_back(alfabeto_minusculo[escolha]);
+        }
+    }
+
+    random_shuffle(sc.begin(), sc.end());
+
+    for (const char& i : sc) {
+        cout << i;
+    }
+    cout << endl;
+}
+
+int main() {
+    srand(time(0));
+    cout << "quantos caracteres voce quer que sua senha tenha?" << endl;
+    cin >> tamanho;
+
+    while (true) {
+        cout << "voce quer que na sua senha tenha: \n\n1 - maiuscula e minuscula \n2 - so maiuscula \n3 - so minuscula" << endl;
+        cin >> mm;
+
+        if (mm == 2 || mm == 3) {
+            total += 1;
+            break;
+        } else if (mm == 1) {
+            total += 2;
+            break;
+        } else {
+            cout << "favor, escolher umas das alternativas abaixo: " << endl;
+        }
+    }
+
+    while (true) {
+        cout << "voce quer que sua senha contenha numeros? \n\n1 - sim \n2 - nao" << endl;
+        cin >> sn1;
+
+        if (sn1 == 1) {
+            total += 1;
+            break;
+        } else if (sn1 == 2) {break;} else {
+            cout << "favor, escolher umas das alternativas abaixo: " << endl;
+        }
+    }
+
+    while (true) {
+        cout << "voce quer que sua senha contenha caracteres especiais? \n\n1 - sim \n2 - nao" << endl;
+        cin >> sn2;
+
+        if (sn2 ==  1) {
+            total += 1;
+            break;
+        } else if (sn2 == 2) {break;} else {
+            cout << "favor, escolher umas das alternativas abaixo: " << endl;
+        }
+    }
+
+    faz_senha();
